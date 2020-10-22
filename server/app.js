@@ -2,74 +2,34 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const firebase = require("firebase");
+firebase.initializeApp({
+    apiKey: "AIzaSyAg9wWi7OccQPxDYWWKIeNMdcOvds-3_iE",
+    authDomain: "workout-clock.firebaseapp.com",
+    databaseURL: "https://workout-clock.firebaseio.com",
+    projectId: "workout-clock",
+    storageBucket: "workout-clock.appspot.com",
+    messagingSenderId: "563160271644",
+    appId: "1:563160271644:web:c939c10fd327bd27d508d9"
+})
 
-// add after require() statements
 
-const videos = [
-    {
-        id: 0,
-        poster: '/video/0/poster',
-        duration: '3 mins',
-        name: 'Sample 1',
-        categories: ["action", "romance"]
-    },
-    {
-        id: 1,
-        poster: '/video/1/poster',
-        duration: '4 mins',
-        name: 'Sample 2',
-        categories: ["comedy", "romance"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
+let videos = [
+
 ];
+
+
+
+firebase.database().ref("videos").once("value").then((snapshot) => {
+    console.log();
+    let rv = snapshot.val();
+    Object.keys(rv).map((obj) => {
+        console.log(obj);
+        console.log(rv[obj])
+        videos.push(rv[obj])
+    })
+    console.log(videos);
+})
 
 
 const app = express();
@@ -78,7 +38,8 @@ app.get('/videos', (req, res) => res.json(videos));
 
 app.get('/category/:category', (req, res) => {
     const filtered = videos.filter((video) => {
-        return video.categories.includes(req.params.category);
+        return video.categories === req.params.category;
+        //return video.categories.includes(req.params.category);
     })
 
     res.json(filtered)
