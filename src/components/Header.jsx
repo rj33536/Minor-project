@@ -16,28 +16,32 @@ function Header(props) {
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                                 <ul className="navbar-nav">
-                                    
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">Action</a>
+                                        <a className="nav-link" href="/myvideos" role="button" aria-haspopup="true" aria-expanded="false">
+                                            My videos
+                                        </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">Comedy</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Romance</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Thriller</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Horror</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Adult</a>
+                                        <a className="nav-link" href="/upload" role="button" aria-haspopup="true" aria-expanded="false">
+                                            Upload
+                                        </a>
                                     </li>
                                     <li className="nav-item dropdown">
                                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Categories
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <a className="dropdown-item" href="/">Action</a>
+                                            <a className="dropdown-item" href="/">Comedy</a>
+                                            <a className="dropdown-item" href="/">Romance</a>
+                                            <a className="dropdown-item" href="/">Thriller</a>
+                                            <a className="dropdown-item" href="/">Horror</a>
+                                            <a className="dropdown-item" href="/">Adult</a>
+                                        </div>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Language
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <a className="dropdown-item" href="/">Hindi</a>
