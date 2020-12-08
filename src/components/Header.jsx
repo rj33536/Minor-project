@@ -10,8 +10,8 @@ function Header(props) {
 
                     return (
                         <nav className={`navbar navbar-expand-lg `}>
-                            <a className={`navbar-brand brand`} href="#">Bamboo</a>
-                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <a className={`navbar-brand brand`} href="/">Bamboo</a>
+                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="/navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNavDropdown">
@@ -27,28 +27,28 @@ function Header(props) {
                                         </a>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Categories
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <a className="dropdown-item" href="/">Action</a>
-                                            <a className="dropdown-item" href="/">Comedy</a>
-                                            <a className="dropdown-item" href="/">Romance</a>
-                                            <a className="dropdown-item" href="/">Thriller</a>
-                                            <a className="dropdown-item" href="/">Horror</a>
-                                            <a className="dropdown-item" href="/">Adult</a>
+                                            <a className="dropdown-item" href="/categories/action">Action</a>
+                                            <a className="dropdown-item" href="/categories/comedy">Comedy</a>
+                                            <a className="dropdown-item" href="/categories/romance">Romance</a>
+                                            <a className="dropdown-item" href="/categories/thriller">Thriller</a>
+                                            <a className="dropdown-item" href="/categories/horror">Horror</a>
+                                            <a className="dropdown-item" href="/categories/adult">Adult</a>
                                         </div>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Language
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <a className="dropdown-item" href="/">Hindi</a>
-                                            <a className="dropdown-item" href="/">English</a>
-                                            <a className="dropdown-item" href="/">Telugu</a>
-                                            <a className="dropdown-item" href="/">Kannada</a>
-                                            <a className="dropdown-item" href="/">Marathi</a>
+                                            <a className="dropdown-item" href="/categories/hindi">Hindi</a>
+                                            <a className="dropdown-item" href="/categories/english">English</a>
+                                            <a className="dropdown-item" href="/telugu">Telugu</a>
+                                            <a className="dropdown-item" href="/kannada">Kannada</a>
+                                            <a className="dropdown-item" href="/marathi">Marathi</a>
                                         </div>
                                     </li>
                                     {

@@ -11,10 +11,14 @@ function Upload() {
         setProgress("uploading");
         const ref = firebase.storage().ref();
         const fileRef = ref.child(fileName);
-
+        console.log(fileRef.fullPath);
         fileRef.put(file).then((res) => {
             console.log("uploaded a file");
             console.log(res.ref.location.path_);
+            return fileRef.getDownloadURL();
+
+        }).then(url => {
+            console.log(url);
             const title = document.getElementById("title").value.replace(" ", "-");
             const language = document.getElementById("language").value;
             const categories = document.getElementById("categories").value;
@@ -25,7 +29,8 @@ function Upload() {
                 categories,
                 description,
                 author: "Rohit Jain",
-
+                path: url,
+                id: title
             }
             setProgress("uploaded");
             return firebase.database().ref("/videos/").push(obj);

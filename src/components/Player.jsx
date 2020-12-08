@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Slider from "./Slider"
+import Slider from "./Slider";
+import UserContext from "../App.js";
+import firebase from "firebase";
 // add below the other import statements
 
 
@@ -8,14 +10,46 @@ export default class Player extends Component {
         super(props);
         this.state = {
             videoId: this.props.match.params.id,
-            videoData: {}
+            videoData: {},
+            videoUrl: "",
+            user: { id: "rj33536" }
         };
+    }
+    async setRating(rating, user) {
+        const data = this.state.videoData;
+        data.rating = rating;
+
+        const res = await fetch(`http://localhost:4000/rate?userId=${this.state.user.id}&movieId=${this.state.videoData.id}&rating=${rating}`)
+        console.log(res.text());
+        this.setState({ videoData: data });
+
     }
     async componentDidMount() {
         try {
             const res = await fetch(`http://localhost:4000/video/${this.state.videoId}/data`);
             const data = await res.json();
-            this.setState({ videoData: data });
+            //console.log(data);
+            data.rating = data.rating ? data.rating : 0;
+            document.getElementsByTagName("video")[0].src = data.path;
+
+            firebase.database().ref("ratings")
+                .orderByChild("userId")
+                .equalTo(this.state.user.id)
+                .once("value").then((snapshot) => {
+                    console.log();
+                    snapshot.forEach((snp) => {
+                        let obj = snp.val();
+                        console.log(obj);
+                        if (obj.movieId === this.state.videoId) {
+                            const data = this.state.videoData;
+                            data.rating = obj.rating;
+                            this.setState({ videoData: data })
+                        }
+                    })
+
+
+                })
+            this.setState({ videoData: data, videoUrl: data.path });
         } catch (error) {
             console.log(error);
         }
@@ -26,16 +60,24 @@ export default class Player extends Component {
 
 
                 <video controls muted autoPlay crossOrigin="anonymous">
-                    <source src={`http://localhost:4000/video/${this.state.videoId}`} type="video/mp4"></source>
                     <track label="English" kind="captions" srcLang="en" src={`http://localhost:4000/video/${this.state.videoId}/caption`} default></track>
                 </video>
                 <div className="details p-4">
 
-                    <p className="text-underline">Shakti</p>
+                    <p className="text-underline">{this.state.videoData.title}</p>
                     <h2>Description</h2>
-                    <p className="text-muted">4m | Hindi | Drama | 2016</p>
+                    <p className="text-muted">{this.state.videoData.categories}</p>
                     <p className="text-muted">18+</p>
-                    <p>After seeing Nimmi being troubled by Harman's mother, Surbhi intervenes and gives her a taste of her own medicine.</p>
+                    <div id="rating">
+
+                        <span className={this.state.videoData.rating >= 1 ? "fa fa-star checked" : "fa fa-star"} onClick={() => { this.setRating(1) }}></span>
+                        <span className={this.state.videoData.rating >= 2 ? "fa fa-star checked" : "fa fa-star"} onClick={() => { this.setRating(2) }}></span>
+                        <span className={this.state.videoData.rating >= 3 ? "fa fa-star checked" : "fa fa-star"} onClick={() => { this.setRating(3) }}></span>
+                        <span className={this.state.videoData.rating >= 4 ? "fa fa-star checked" : "fa fa-star"} onClick={() => { this.setRating(4) }}></span>
+                        <span className={this.state.videoData.rating >= 5 ? "fa fa-star checked" : "fa fa-star"} onClick={() => { this.setRating(5) }}></span>
+
+                    </div>
+                    <p>{this.state.videoData.description}</p>
                     <div className=" mt-5">
                         <Slider category="Recommended for you" />
                     </div>

@@ -14,21 +14,18 @@ firebase.initializeApp({
 })
 
 
-let videos = [
-
-];
-
-
-
+let videos = [];
+let allVideos = [];
 firebase.database().ref("videos").once("value").then((snapshot) => {
-    console.log();
     let rv = snapshot.val();
+    allVideos = rv;
     Object.keys(rv).map((obj) => {
-        console.log(obj);
-        console.log(rv[obj])
-        videos.push(rv[obj])
+
+        const video = rv[obj];
+        video.id = obj;
+        videos.push(video)
     })
-    console.log(videos);
+    //console.log(videos);
 })
 
 
@@ -47,37 +44,6 @@ app.get('/category/:category', (req, res) => {
 
 // add after app.get('/video/:id/data', ...) route
 
-app.get('/video/:id', (req, res) => {
-    const path = `assets/${req.params.id}.mp4`;
-    const stat = fs.statSync(path);
-    const fileSize = stat.size;
-    const range = req.headers.range;
-    if (range) {
-        const parts = range.replace(/bytes=/, "").split("-");
-        const start = parseInt(parts[0], 10);
-        const end = parts[1]
-            ? parseInt(parts[1], 10)
-            : fileSize - 1;
-        const chunksize = (end - start) + 1;
-        const file = fs.createReadStream(path, { start, end });
-        const head = {
-            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-            'Accept-Ranges': 'bytes',
-            'Content-Length': chunksize,
-            'Content-Type': 'video/mp4',
-        };
-        res.writeHead(206, head);
-        file.pipe(res);
-    } else {
-        const head = {
-            'Content-Length': fileSize,
-            'Content-Type': 'video/mp4',
-        };
-        res.writeHead(200, head);
-        fs.createReadStream(path).pipe(res);
-    }
-});
-
 const thumbsupply = require('thumbsupply');
 
 app.listen(4000, () => {
@@ -93,6 +59,38 @@ app.get('/video/:id/poster', (req, res) => {
         });
 });
 
+app.get('/rate', (req, res) => {
+    let movieId = req.query.movieId, userId = req.query.userId, rating = req.query.rating;
+    firebase.database().ref("ratings")
+        .orderByChild("userId")
+        .equalTo(this.state.user.id)
+        .once("value").then((snapshot) => {
+            console.log();
+            snapshot.forEach((snp) => {
+                let obj = snp.val();
+                console.log(obj);
+                if (obj.movieId === this.state.videoId) {
+                    //do something here
+
+                }
+            })
+
+
+        })
+    firebase.database().ref("ratings").push({
+        movieId,
+        userId,
+        rating
+    }).then((data) => {
+        console.log(data);
+    })
+
+    res.send("");
+})
+
+app.get('/video/:id/data', (req, res) => {
+    res.json(allVideos[req.params.id]);
+})
 // add after the app.get('/video/:id/poster', ...) route
 
 app.get('/video/:id/caption', (req, res) => res.sendFile('assets/captions/sample.vtt', { root: __dirname }));

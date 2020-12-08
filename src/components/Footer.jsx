@@ -19,8 +19,8 @@ function Footer() {
                     <p>Contacts Us</p>
                 </div>
             </div>
-            
-            <p>&copy; 2020, uTunnel. All rights reserved.</p>
+
+            <p>&copy; 2020, Bamboo. All rights reserved.</p>
         </footer>
     );
 }
