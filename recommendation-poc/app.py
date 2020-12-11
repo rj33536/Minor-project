@@ -35,23 +35,37 @@ def preprocess():
   item_similarity = df.corr()
   return item_similarity
 
-def get_similar(id):
+def get_similar_movies(movie_id, user_rating):
   item_similarity = preprocess()
-  print(item_similarity)
-  sorted_sim = item_similarity.sort_values(by=id, ascending=False)[id]
-  rec_list = list(sorted_sim.index)
-  return rec_list[:NO_OF_RECOMMENDATIONS]
+  similar_score = item_similarity[movie_id]*(user_rating-2.5)
+  similar_score=similar_score.sort_values(ascending=False)
+
+  return similar_score
+
+def get_history(user_id):
+  return [(1172,4),(1129,2.0)]
+
+def get_recommendations(user_id):
+  user_history = get_history(user_id)
+  similar_movies = pd.DataFrame()
+  for movie,rating in user_history:
+    similar_movies = similar_movies.append(get_similar_movies(movie,rating),ignore_index=True)
+  similar_movies = similar_movies.sum().sort_values(ascending=False)
+  return similar_movies
+
+print(get_recommendations("1"))
 import json
 @app.route('/')
-def get_recommendations():
+def index():
     id_  = request.args.get("id")
-    rec = get_similar(int(id_))
+    if id_:
+      rec = get_recommendations(id_)
     
-    return json.dumps(rec)
+      return rec.to_json()
+    return "Something wrong"
 
 if __name__ == '__main__':
     app.run(debug=True)
-    #rec = get_similar(1)
-    print(rec)
+    
     
     
