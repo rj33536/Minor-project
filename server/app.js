@@ -61,22 +61,33 @@ app.get('/video/:id/poster', (req, res) => {
 
 app.get('/rate', (req, res) => {
     let movieId = req.query.movieId, userId = req.query.userId, rating = req.query.rating;
+
     firebase.database().ref("ratings")
         .orderByChild("userId")
-        .equalTo(this.state.user.id)
+        .equalTo(userId)
         .once("value").then((snapshot) => {
             console.log();
+            let isMatched = false;
             snapshot.forEach((snp) => {
                 let obj = snp.val();
                 console.log(obj);
-                if (obj.movieId === this.state.videoId) {
+                if (obj.movieId === movieId) {
                     //do something here
+                    isMatched = true;
 
                 }
             })
+            if (!isMatched) {
+                firebase.database().ref("rarings").push({
+                    rating: rating,
+                    movieId: movieId,
+                    userId: userId
+                })
+            }
 
 
         })
+
     firebase.database().ref("ratings").push({
         movieId,
         userId,

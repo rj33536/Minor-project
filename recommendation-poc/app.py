@@ -21,39 +21,53 @@ db = firebase.database()
 
 
 def getRatings():
-  ratings = db.child("videos").get().val()
-  ratings = pd.DataFrame(ratings)
-  return ratings.T
+  ratings = db.child("ratings").get().val()
+  ratings = pd.DataFrame(ratings).T
+  ratings.rating = ratings.rating.astype("int64")
+  return ratings
 
 
 def preprocess():
-  ratings = getRatings()
-  df = pd.read_csv("./ratings_small.csv")
-  df.drop("timestamp", inplace=True, axis=1)
+  df = getRatings()
+
+  # df = pd.read_csv("./ratings_small.csv")
+  # df.drop("timestamp", inplace=True, axis=1)
+  #print(df)
   df = df.pivot_table(index=["userId"],columns=["movieId"], values="rating")
-  df = df.dropna(thresh=10, axis=1).fillna(0)
+  #df = df.dropna(thresh=10, axis=1).fillna(0)
   item_similarity = df.corr()
+  print(item_similarity)
   return item_similarity
 
 def get_similar_movies(movie_id, user_rating):
   item_similarity = preprocess()
-  similar_score = item_similarity[movie_id]*(user_rating-2.5)
+  print("item sim")
+  print(item_similarity)
+  similar_score = item_similarity[movie_id]*(user_rating)
   similar_score=similar_score.sort_values(ascending=False)
 
   return similar_score
 
 def get_history(user_id):
-  return [(1172,4),(1129,2.0)]
+  ratings = db.child("ratings").get().val()
+  df  = pd.DataFrame(ratings).T
+  df = df[df.userId==user_id]
+  df = df.drop_duplicates(subset=['movieId'], keep='last')
+  history = []
+  for index, row in df.iterrows():
+    history.append([row["movieId"],int(row["rating"])])
+  return history
 
 def get_recommendations(user_id):
   user_history = get_history(user_id)
+  # print("user hist")
+  # print(user_history)
   similar_movies = pd.DataFrame()
   for movie,rating in user_history:
     similar_movies = similar_movies.append(get_similar_movies(movie,rating),ignore_index=True)
   similar_movies = similar_movies.sum().sort_values(ascending=False)
   return similar_movies
 
-print(get_recommendations("1"))
 import json
 @app.route('/')
 def index():
@@ -61,11 +75,12 @@ def index():
     if id_:
       rec = get_recommendations(id_)
     
-      return rec.to_json()
+      return "rec.to_json()"
     return "Something wrong"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+  print(get_recommendations("rj33536"))
+  app.run(debug=True)
     
     
     

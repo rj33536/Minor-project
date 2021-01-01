@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Card from "./Card"
+import Card from "./Card";
+// import axios from "axios"
 export default function Carousel(props) {
     const [videos, setVideos] = useState([]);
 
     useEffect(() => {
-        async function fetchData(){
+        async function fetchData() {
             try {
                 const response = await fetch('http://localhost:4000/category/' + props.category);
                 const data = await response.json();
@@ -12,7 +13,23 @@ export default function Carousel(props) {
             } catch (error) {
             }
         }
-        fetchData();
+        async function fetchRecommendations() {
+            try {
+                const url = "http://127.0.0.1:5000/?id=rj33536";
+                console.log(url);
+                const response = await fetch(url);
+
+                console.log(response);
+            } catch (error) {
+                console.log("error");
+                console.log(error);
+            }
+        }
+        if (props.category === "Recommended") {
+            fetchRecommendations();
+            console.log(props.category);
+        } else
+            fetchData();
     }, [props.category]);
     return (
         <div>
