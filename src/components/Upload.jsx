@@ -6,35 +6,39 @@ function Upload() {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState(null);
     const [progress, setProgress] = useState(null);
+    const [thumbImage, setThumbImage] = useState(null);
+    const [thumbImageName, setThumbImageName] = useState(null);
+
     const uploadFile = (e) => {
         e.preventDefault();
         setProgress("uploading");
         const ref = firebase.storage().ref();
-        const fileRef = ref.child(fileName);
-        console.log(fileRef.fullPath);
-        fileRef.put(file).then((res) => {
-            console.log("uploaded a file");
-            console.log(res.ref.location.path_);
-            return fileRef.getDownloadURL();
+        const fileRefs = [ref.child(fileName), ref.child(thumbImageName)];
+        console.log(fileRefs);
+        Promise.all([fileRefs[0].put(file), fileRefs[1].put(thumbImage)])
+            .then((res) => {
+                console.log("uploaded a file");
+                return Promise.all([fileRefs[0].getDownloadURL(), fileRefs[1].getDownloadURL()]);
 
-        }).then(url => {
-            console.log(url);
-            const title = document.getElementById("title").value.replace(" ", "-");
-            const language = document.getElementById("language").value;
-            const categories = document.getElementById("categories").value;
-            const description = document.getElementById("description").value;
-            const obj = {
-                title,
-                language,
-                categories,
-                description,
-                author: "Rohit Jain",
-                path: url,
-                id: title
-            }
-            setProgress("uploaded");
-            return firebase.database().ref("/videos/").push(obj);
-        })
+            }).then(([videoUrl, thumbUrl]) => {
+                console.log(videoUrl);
+                const title = document.getElementById("title").value.replace(" ", "-");
+                const language = document.getElementById("language").value;
+                const categories = document.getElementById("categories").value;
+                const description = document.getElementById("description").value;
+                const obj = {
+                    title,
+                    language,
+                    categories,
+                    description,
+                    author: "Rohit Jain",
+                    path: videoUrl,
+                    thumbUrl: thumbUrl,
+                    id: title
+                }
+                setProgress("uploaded");
+                return firebase.database().ref("/videos/").push(obj);
+            })
             .then(res => {
                 console.log(res);
             })
@@ -48,6 +52,15 @@ function Upload() {
 
             setFile(files[0]);
             setFileName(files[0].name);
+
+        }
+    }
+    const onThumbChange = e => {
+        const files = e.target.files;
+        if (files && files[0]) {
+
+            setThumbImage(files[0]);
+            setThumbImageName(files[0].name);
 
         }
     }
@@ -86,6 +99,10 @@ function Upload() {
             <div className="form-group">
                 <label for="exampleFormControlFile1">Upload the video</label>
                 <input type="file" className="form-control-file" id="exampleFormControlFile1" onChange={onChange} />
+            </div>
+            <div className="form-group">
+                <label for="exampleFormControlFile1">Upload the thumb Image</label>
+                <input type="file" className="form-control-file" id="exampleFormControlFile1" onChange={onThumbChange} />
             </div>
             <input type="submit" value="Upload" className="btn btn-primary w-75 m-4" />
             <div className={progress ? "d-block" : "d-none"}>

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const firebase = require("firebase");
+
 firebase.initializeApp({
     apiKey: "AIzaSyAg9wWi7OccQPxDYWWKIeNMdcOvds-3_iE",
     authDomain: "workout-clock.firebaseapp.com",
@@ -30,7 +31,7 @@ firebase.database().ref("videos").once("value").then((snapshot) => {
 
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.get('/videos', (req, res) => res.json(videos));
 
 app.get('/category/:category', (req, res) => {

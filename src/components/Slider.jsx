@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Card from "./Card";
-// import axios from "axios"
+import axios from "axios";
+import "../utils/firebase";
+import firebase from "firebase"
 export default function Carousel(props) {
     const [videos, setVideos] = useState([]);
 
@@ -13,13 +15,31 @@ export default function Carousel(props) {
             } catch (error) {
             }
         }
+
+        async function getMovies(list) {
+            let movies = [];
+
+            let allMovies = await firebase.database().ref("videos").once("value");
+            allMovies = allMovies.val();
+            for (let key of list) {
+                let movie = allMovies[key];
+                if (movie) {
+                    movies.push(movie);
+                }
+            }
+            return movies;
+        }
         async function fetchRecommendations() {
             try {
                 const url = "http://127.0.0.1:5000/?id=rj33536";
                 console.log(url);
-                const response = await fetch(url);
-
-                console.log(response);
+                const data = (await axios.get(url)).data;
+                console.log(data);
+                if (typeof (data) !== 'string') {
+                    const movies = await getMovies(data);
+                    setVideos(movies)
+                    console.log();
+                }
             } catch (error) {
                 console.log("error");
                 console.log(error);

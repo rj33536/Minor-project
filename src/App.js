@@ -24,7 +24,7 @@ function App() {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       const myUser = JSON.parse(loggedInUser);
-      
+
       setUser(myUser);
     }
 
@@ -53,7 +53,7 @@ function App() {
 
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/upload" component={Upload}></Route>
-          <Route exact path="/category/:category" component={Category}></Route>
+          <Route exact path="/categories/:category" component={Category}></Route>
           <Route path="/player/:id" component={Player}></Route>
 
         </Switch>

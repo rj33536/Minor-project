@@ -2,8 +2,11 @@ import pandas as pd
 import numpy as np         
 import pyrebase
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+
 config = {
     "apiKey": "AIzaSyAg9wWi7OccQPxDYWWKIeNMdcOvds-3_iE",
     "authDomain": "workout-clock.firebaseapp.com",
@@ -70,12 +73,14 @@ def get_recommendations(user_id):
 
 import json
 @app.route('/')
+@cross_origin()
 def index():
     id_  = request.args.get("id")
     if id_:
       rec = get_recommendations(id_)
-    
-      return "rec.to_json()"
+      rec = rec.index.tolist()
+      print()
+      return json.dumps(rec)
     return "Something wrong"
 
 if __name__ == '__main__':

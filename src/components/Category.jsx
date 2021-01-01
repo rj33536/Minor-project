@@ -11,6 +11,7 @@ export default class Category extends Component {
     async componentDidMount() {
         try {
             const response = await fetch('http://localhost:4000/category/' + this.props.match.params.category);
+            console.log(this.props);
             let data = await response.json();
             data = [...data];
             this.setState({ videos: [...data] });

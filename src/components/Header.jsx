@@ -31,12 +31,12 @@ function Header(props) {
                                             Categories
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <a className="dropdown-item" href="/categories/action">Action</a>
-                                            <a className="dropdown-item" href="/categories/comedy">Comedy</a>
-                                            <a className="dropdown-item" href="/categories/romance">Romance</a>
-                                            <a className="dropdown-item" href="/categories/thriller">Thriller</a>
-                                            <a className="dropdown-item" href="/categories/horror">Horror</a>
-                                            <a className="dropdown-item" href="/categories/adult">Adult</a>
+                                            <a className="dropdown-item" href="/categories/Action">Action</a>
+                                            <a className="dropdown-item" href="/categories/Comedy">Comedy</a>
+                                            <a className="dropdown-item" href="/categories/Romance">Romance</a>
+                                            <a className="dropdown-item" href="/categories/Thriller">Thriller</a>
+                                            <a className="dropdown-item" href="/categories/Horror">Horror</a>
+                                            <a className="dropdown-item" href="/categories/Adult">Adult</a>
                                         </div>
                                     </li>
                                     <li className="nav-item dropdown">
@@ -46,9 +46,9 @@ function Header(props) {
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <a className="dropdown-item" href="/categories/hindi">Hindi</a>
                                             <a className="dropdown-item" href="/categories/english">English</a>
-                                            <a className="dropdown-item" href="/telugu">Telugu</a>
-                                            <a className="dropdown-item" href="/kannada">Kannada</a>
-                                            <a className="dropdown-item" href="/marathi">Marathi</a>
+                                            <a className="dropdown-item" href="/categories/telugu">Telugu</a>
+                                            <a className="dropdown-item" href="/categories/kannada">Kannada</a>
+                                            <a className="dropdown-item" href="/categories/marathi">Marathi</a>
                                         </div>
                                     </li>
                                     {
