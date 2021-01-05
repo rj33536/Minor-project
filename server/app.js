@@ -79,7 +79,7 @@ app.get('/rate', (req, res) => {
                 }
             })
             if (!isMatched) {
-                firebase.database().ref("rarings").push({
+                firebase.database().ref("ratings").push({
                     rating: rating,
                     movieId: movieId,
                     userId: userId

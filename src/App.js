@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react';
+
 import {
   Route,
   BrowserRouter as Router,
@@ -14,6 +14,7 @@ import Upload from "./components/Upload"
 import './App.css';
 import firebase from "firebase";
 import { app } from './utils/firebase';
+import React, { createContext, useEffect } from 'react';
 const UserContext = createContext({});
 //TODO: context api value not updating
 

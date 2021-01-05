@@ -84,7 +84,7 @@ def index():
     return "Something wrong"
 
 if __name__ == '__main__':
-  print(get_recommendations("rj33536"))
+  # print(get_recommendations("rj33536"))
   app.run(debug=True)
     
     
