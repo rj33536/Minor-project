@@ -65,6 +65,7 @@ def get_recommendations(user_id):
   user_history = get_history(user_id)
   # print("user hist")
   # print(user_history)
+  #[(movie1, 5), (movie2,2)]
   similar_movies = pd.DataFrame()
   for movie,rating in user_history:
     similar_movies = similar_movies.append(get_similar_movies(movie,rating),ignore_index=True)
