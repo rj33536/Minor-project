@@ -1,12 +1,16 @@
-Upload video screen
+## Upload video screen
+
 ![alt text](https://github.com/rj33536/Minor-project/blob/dev/img/upload.jpeg?raw=true)
 
-Video player screen
+## Video player screen
+
 ![alt text](https://github.com/rj33536/Minor-project/blob/dev/img/video.png?raw=true)
 
-Home screen
+## Home screen
+
 ![alt text](https://github.com/rj33536/Minor-project/blob/dev/img/home.jpeg?raw=true)
 
-Recommendation
+## Recommendation
+
 ![alt text](https://github.com/rj33536/Minor-project/blob/dev/img/recommendation.png?raw=true)
 
