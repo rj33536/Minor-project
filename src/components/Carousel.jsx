@@ -10,10 +10,10 @@ export default function Carousel(params) {
                         <img class="d-block w-100" src="https://v3img.voot.com/resizeMedium,w_845,h_475/v3Storage/assets/bigg-boss-Episode-v3-1602216265455.jpg" alt="First slide" />
                     </div>
                     <div class="carousel-item carousel-card ">
-                        <img class="d-block w-100" src="https://v3img.voot.com/resizeMedium,w_845,h_475/v3Storage/assets/bigg-boss-Episode-v3-1602216265455.jpg" alt="Second slide" />
+                        <img class="d-block w-100" src="https://v3img.voot.com/resizeMedium,w_845,h_475/v3Storage/assets/NGN-1610247570465.jpg" alt="Second slide" />
                     </div>
                     <div class="carousel-item carousel-card ">
-                        <img class="d-block w-100" src="https://v3img.voot.com/resizeMedium,w_845,h_475/v3Storage/assets/bigg-boss-Episode-v3-1602216265455.jpg" alt="Third slide" />
+                        <img class="d-block w-100" src="https://v3img.voot.com/resizeMedium,w_845,h_475/v3Storage/assets/roadies-1610247593496.jpg" alt="Third slide" />
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

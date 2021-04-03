@@ -2,120 +2,48 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const firebase = require("firebase");
 
-// add after require() statements
+firebase.initializeApp({
+    apiKey: "AIzaSyAg9wWi7OccQPxDYWWKIeNMdcOvds-3_iE",
+    authDomain: "workout-clock.firebaseapp.com",
+    databaseURL: "https://workout-clock.firebaseio.com",
+    projectId: "workout-clock",
+    storageBucket: "workout-clock.appspot.com",
+    messagingSenderId: "563160271644",
+    appId: "1:563160271644:web:c939c10fd327bd27d508d9"
+})
 
-const videos = [
-    {
-        id: 0,
-        poster: '/video/0/poster',
-        duration: '3 mins',
-        name: 'Sample 1',
-        categories: ["action", "romance"]
-    },
-    {
-        id: 1,
-        poster: '/video/1/poster',
-        duration: '4 mins',
-        name: 'Sample 2',
-        categories: ["comedy", "romance"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-    {
-        id: 2,
-        poster: '/video/2/poster',
-        duration: '2 mins',
-        name: 'Sample 3',
-        categories: ["action", "comedy"]
-    },
-];
+
+let videos = [];
+let allVideos = [];
+firebase.database().ref("videos").once("value").then((snapshot) => {
+    let rv = snapshot.val();
+    allVideos = rv;
+    Object.keys(rv).map((obj) => {
+
+        const video = rv[obj];
+        video.id = obj;
+        videos.push(video)
+    })
+    //console.log(videos);
+})
 
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.get('/videos', (req, res) => res.json(videos));
 
 app.get('/category/:category', (req, res) => {
     const filtered = videos.filter((video) => {
-        return video.categories.includes(req.params.category);
+        return video.categories === req.params.category;
+        //return video.categories.includes(req.params.category);
     })
 
     res.json(filtered)
 });
 
 // add after app.get('/video/:id/data', ...) route
-
-app.get('/video/:id', (req, res) => {
-    const path = `assets/${req.params.id}.mp4`;
-    const stat = fs.statSync(path);
-    const fileSize = stat.size;
-    const range = req.headers.range;
-    if (range) {
-        const parts = range.replace(/bytes=/, "").split("-");
-        const start = parseInt(parts[0], 10);
-        const end = parts[1]
-            ? parseInt(parts[1], 10)
-            : fileSize - 1;
-        const chunksize = (end - start) + 1;
-        const file = fs.createReadStream(path, { start, end });
-        const head = {
-            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-            'Accept-Ranges': 'bytes',
-            'Content-Length': chunksize,
-            'Content-Type': 'video/mp4',
-        };
-        res.writeHead(206, head);
-        file.pipe(res);
-    } else {
-        const head = {
-            'Content-Length': fileSize,
-            'Content-Type': 'video/mp4',
-        };
-        res.writeHead(200, head);
-        fs.createReadStream(path).pipe(res);
-    }
-});
 
 const thumbsupply = require('thumbsupply');
 
@@ -132,6 +60,49 @@ app.get('/video/:id/poster', (req, res) => {
         });
 });
 
+app.get('/rate', (req, res) => {
+    let movieId = req.query.movieId, userId = req.query.userId, rating = req.query.rating;
+
+    firebase.database().ref("ratings")
+        .orderByChild("userId")
+        .equalTo(userId)
+        .once("value").then((snapshot) => {
+            console.log();
+            let isMatched = false;
+            snapshot.forEach((snp) => {
+                let obj = snp.val();
+                console.log(obj);
+                if (obj.movieId === movieId) {
+                    //do something here
+                    isMatched = true;
+
+                }
+            })
+            if (!isMatched) {
+                firebase.database().ref("ratings").push({
+                    rating: rating,
+                    movieId: movieId,
+                    userId: userId
+                })
+            }
+
+
+        })
+
+    firebase.database().ref("ratings").push({
+        movieId,
+        userId,
+        rating
+    }).then((data) => {
+        console.log(data);
+    })
+
+    res.send("");
+})
+
+app.get('/video/:id/data', (req, res) => {
+    res.json(allVideos[req.params.id]);
+})
 // add after the app.get('/video/:id/poster', ...) route
 
 app.get('/video/:id/caption', (req, res) => res.sendFile('assets/captions/sample.vtt', { root: __dirname }));

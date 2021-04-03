@@ -7,9 +7,13 @@ export default class Home extends Component {
         this.state = {
             videos: [],
             categories: [
-                "romance",
-                "action",
-                "comedy"
+                "Recommended",
+                "Romance",
+                "Action",
+                "Comedy",
+                "Thriller",
+                "Horror",
+                "Adult"
             ]
         };
     }

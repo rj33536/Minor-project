@@ -10,41 +10,45 @@ function Header(props) {
 
                     return (
                         <nav className={`navbar navbar-expand-lg `}>
-                            <a className={`navbar-brand brand`} href="#">Bamboo</a>
-                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <a className={`navbar-brand brand`} href="/">Bamboo</a>
+                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="/navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNavDropdown">
                                 <ul className="navbar-nav">
-                                    
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">Action</a>
+                                        <a className="nav-link" href="/myvideos" role="button" aria-haspopup="true" aria-expanded="false">
+                                            My videos
+                                        </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">Comedy</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Romance</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Thriller</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Horror</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Adult</a>
+                                        <a className="nav-link" href="/upload" role="button" aria-haspopup="true" aria-expanded="false">
+                                            Upload
+                                        </a>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Categories
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <a className="dropdown-item" href="/">Hindi</a>
-                                            <a className="dropdown-item" href="/">English</a>
-                                            <a className="dropdown-item" href="/">Telugu</a>
-                                            <a className="dropdown-item" href="/">Kannada</a>
-                                            <a className="dropdown-item" href="/">Marathi</a>
+                                            <a className="dropdown-item" href="/categories/Action">Action</a>
+                                            <a className="dropdown-item" href="/categories/Comedy">Comedy</a>
+                                            <a className="dropdown-item" href="/categories/Romance">Romance</a>
+                                            <a className="dropdown-item" href="/categories/Thriller">Thriller</a>
+                                            <a className="dropdown-item" href="/categories/Horror">Horror</a>
+                                            <a className="dropdown-item" href="/categories/Adult">Adult</a>
+                                        </div>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Language
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <a className="dropdown-item" href="/categories/hindi">Hindi</a>
+                                            <a className="dropdown-item" href="/categories/english">English</a>
+                                            <a className="dropdown-item" href="/categories/telugu">Telugu</a>
+                                            <a className="dropdown-item" href="/categories/kannada">Kannada</a>
+                                            <a className="dropdown-item" href="/categories/marathi">Marathi</a>
                                         </div>
                                     </li>
                                     {
