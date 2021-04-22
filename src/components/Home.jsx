@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Carousel from "./Carousel";
 import Slider from "./Slider"
+import {SERVER_URL} from "../utils/routes";
+
 export default class Home extends Component {
     constructor() {
         super();
@@ -19,7 +21,7 @@ export default class Home extends Component {
     }
     async componentDidMount() {
         try {
-            const response = await fetch('http://localhost:4000/videos');
+            const response = await fetch(`${SERVER_URL}/videos`);
             const data = await response.json();
             this.setState({ videos: [...data] });
         } catch (error) {

@@ -3,13 +3,14 @@ import Card from "./Card";
 import axios from "axios";
 import "../utils/firebase";
 import firebase from "firebase"
+import { SERVER_URL } from '../utils/routes';
 export default function Carousel(props) {
     const [videos, setVideos] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:4000/category/' + props.category);
+                const response = await fetch(`${SERVER_URL}/category/` + props.category);
                 const data = await response.json();
                 setVideos([...data]);
             } catch (error) {

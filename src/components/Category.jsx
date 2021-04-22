@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import Card from "./Card"
+import Card from "./Card";
+import {SERVER_URL} from "../utils/routes";
 export default class Category extends Component {
     constructor() {
         super();
@@ -10,7 +11,7 @@ export default class Category extends Component {
     }
     async componentDidMount() {
         try {
-            const response = await fetch('http://localhost:4000/category/' + this.props.match.params.category);
+            const response = await fetch(`${SERVER_URL}/category/` + this.props.match.params.category);
             console.log(this.props);
             let data = await response.json();
             data = [...data];

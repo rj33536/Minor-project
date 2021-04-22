@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Slider from "./Slider";
 import UserContext from "../App.js";
 import firebase from "firebase";
+import { SERVER_URL } from '../utils/routes';
 // add below the other import statements
 
 
@@ -19,14 +20,14 @@ export default class Player extends Component {
         const data = this.state.videoData;
         data.rating = rating;
 
-        const res = await fetch(`http://localhost:4000/rate?userId=${this.state.user.id}&movieId=${this.state.videoData.id}&rating=${rating}`)
+        const res = await fetch(`${SERVER_URL}/rate?userId=${this.state.user.id}&movieId=${this.state.videoData.id}&rating=${rating}`)
         console.log(res.text());
         this.setState({ videoData: data });
 
     }
     async componentDidMount() {
         try {
-            const res = await fetch(`http://localhost:4000/video/${this.state.videoId}/data`);
+            const res = await fetch(`${SERVER_URL}/video/${this.state.videoId}/data`);
             const data = await res.json();
             //console.log(data);
             data.rating = data.rating ? data.rating : 0;
@@ -60,7 +61,7 @@ export default class Player extends Component {
 
 
                 <video controls muted autoPlay crossOrigin="anonymous">
-                    <track label="English" kind="captions" srcLang="en" src={`http://localhost:4000/video/${this.state.videoId}/caption`} default></track>
+                    <track label="English" kind="captions" srcLang="en" src={`${SERVER_URL}/video/${this.state.videoId}/caption`} default></track>
                 </video>
                 <div className="details p-4">
 
