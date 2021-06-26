@@ -118,6 +118,7 @@ carousel-item-card{
 .prev--container,.next--container{
   align-items: center;
   display: grid;
+  cursor: pointer;
   
 }
 
@@ -130,4 +131,8 @@ carousel-item-card{
 
 .navbar-brand-dark {
   color: black !important;
+}
+
+.brand{
+  font-size: 26px;
 }

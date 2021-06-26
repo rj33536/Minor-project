@@ -54,7 +54,9 @@ export default function Carousel(props) {
     }, [props.category]);
     return (
         <div className=" w-100">
-            <h3>{props.category}</h3>
+            <div className="d-flex justify-content-between"><h3>{props.category}</h3>
+            <a href={`categories/${props.category}`}>View all</a>
+            </div>
             {
                 videos.length !== 0 ?
                     <div className="slider--container d-flex" >
