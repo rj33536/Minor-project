@@ -45,8 +45,8 @@ video {
   object-fit: contain;
 }
 .category-card>img {
-  /* height: 100px !important;
-  width: 200px !important; */
+  max-height: 150px !important;
+  max-width: 300px !important;
   border: none !important;
   margin: 0%;
   padding: 0%;
@@ -72,6 +72,7 @@ p {
 .carousel-card>img{
   width: 40vw;
   height: 60vh;
+  /* border: 2px solid #860ace; */
   object-fit: contain;
 }
 
@@ -127,3 +128,6 @@ carousel-item-card{
   color: orange;
 }
 
+.navbar-brand-dark {
+  color: black !important;
+}

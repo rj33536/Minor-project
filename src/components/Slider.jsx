@@ -53,7 +53,7 @@ export default function Carousel(props) {
             fetchData();
     }, [props.category]);
     return (
-        <div>
+        <div className=" w-100">
             <h3>{props.category}</h3>
             {
                 videos.length !== 0 ?
@@ -62,7 +62,13 @@ export default function Carousel(props) {
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         </div>
 
-                        <div className="d-flex slider" id={props.category}>
+                        <div className="d-flex slider w-100" id={props.category}>
+                            {videos.map(video =>
+                                <Card video={video} />
+                            )}
+                            {videos.map(video =>
+                                <Card video={video} />
+                            )}
                             {videos.map(video =>
                                 <Card video={video} />
                             )}
